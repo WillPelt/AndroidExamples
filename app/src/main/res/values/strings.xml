@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">AndroidExamples</string>
     <string name="hello"> Hello World </string>
+    <string name="ButtonText">I\'m a button</string>
 </resources>
