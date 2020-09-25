@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
 
     <RelativeLayout
@@ -19,7 +20,7 @@
             android:id="@+id/text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Look at my GUI"
+            android:text="@string/look"
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -31,11 +32,11 @@
             android:layout_below="@id/text_view"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Click Here"
+            android:text="@string/click"
 
             />
 
-        <checkbox
+        <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="200dp"
             android:layout_height="34dp"
@@ -43,7 +44,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@id/button"
-            android:text="Check this out" />
+            android:text="@string/check" />
 
         <EditText
             android:id="@+id/edit_text"
@@ -52,7 +53,7 @@
             android:layout_below="@id/imgBtn"
             android:layout_marginTop="0dp"
             android:inputType="textPersonName"
-            android:text="Type here " />
+            android:text="@string/type" />
 
         <ImageButton
             android:id="@+id/imgBtn"
@@ -69,7 +70,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="7dp"
             android:layout_toRightOf="@id/imgBtn"
-            android:text="Switch on / off" />
+            android:text="@string/switcher" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,30 +17,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_linear);
 
-        final TextView myTextView = findViewById(R.id.topText);
+
 
         final Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getResources().getString(R.string.toast_message), Toast.LENGTH_LONG);
-                        toast.show();
-                        }
-                });
-
-        final Switch switcher = findViewById(R.id.switcher);
-        switcher.setChecked(false);
-        switcher.setOnCheckedChangeListener( (whatClicked, newState) -> {
-            Snackbar.make(myTextView, "The switch is now" + newState, 20).show();
-
+                toast.show();
+            }
         });
 
-            }
+        Switch switcher = findViewById(R.id.switcher);
+        TextView myTextView = findViewById(R.id.switcher);
 
-        }
+        switcher.setOnCheckedChangeListener( (whatClicked, newState) -> {
+            Snackbar.make(myTextView, "The switch is now " + newState, Snackbar.LENGTH_SHORT).setAction( "Undo", click -> switcher.setChecked(!newState)).show();
+
         });
 
     }
+
 }
+
+
+

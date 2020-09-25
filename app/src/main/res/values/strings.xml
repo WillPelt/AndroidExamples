@@ -3,4 +3,9 @@
     <string name="hello"> Hello World </string>
     <string name="ButtonText">I\'m a button</string>
     <string name="toast_message">Here is more information</string>
+    <string name="look">Look at my GUI</string>
+    <string name="click">Click Here</string>
+    <string name="type">Type here</string>
+    <string name="switcher">Switch on/off</string>
+    <string name="check">Check this out</string>
 </resources>
