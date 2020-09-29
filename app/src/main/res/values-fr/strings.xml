@@ -8,4 +8,5 @@
     <string name="type">écrivez ici</string>
     <string name="switcher">allumer / éteindre</string>
     <string name="check">Regarde ça</string>
+    <string name="switch_message">"le commutateur est "</string>
 </resources>

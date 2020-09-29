@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">AndroidExamples</string>
-    <string name="hello"> Bonjour Canada </string>
+    <string name="hello"> Bonjour </string>
     <string name="ButtonText">Je suis un button</string>
     <string name="toast_message">Voici plus d\'informations</string>
     <string name="look">Regarder mon GUI</string>
@@ -8,4 +8,5 @@
     <string name="type">écrivez ici</string>
     <string name="switcher">allumer / éteindre</string>
     <string name="check">Regarde ça</string>
+    <string name="switch_message">"le commutateur est "</string>
 </resources>

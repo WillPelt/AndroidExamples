@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         TextView myTextView = findViewById(R.id.switcher);
 
         switcher.setOnCheckedChangeListener( (whatClicked, newState) -> {
-            Snackbar.make(myTextView, "The switch is now " + newState, Snackbar.LENGTH_SHORT).setAction( "Undo", click -> switcher.setChecked(!newState)).show();
+            Snackbar.make(myTextView,getResources().getString(R.string.switch_message) + newState, Snackbar.LENGTH_SHORT).setAction( "Undo", click -> switcher.setChecked(!newState)).show();
 
         });
 
