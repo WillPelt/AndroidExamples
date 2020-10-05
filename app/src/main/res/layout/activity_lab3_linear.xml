@@ -27,7 +27,7 @@
               android:id="@+id/email"
               android:layout_height="wrap_content"
               android:layout_width="match_parent"
-              android:text="@string/email"
+              android:hint="@string/email"
               android:inputType="textEmailAddress"
                 />
           <TextView
