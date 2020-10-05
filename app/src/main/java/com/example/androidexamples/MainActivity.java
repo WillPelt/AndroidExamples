@@ -29,22 +29,22 @@ public class MainActivity extends AppCompatActivity {
         EditText typeField = findViewById(R.id.email);
         typeField.setText(email);
 
-        final Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.toast_message), Toast.LENGTH_LONG);
-                toast.show(); }
-        });
+        //final Button button = findViewById(R.id.button);
+        //button.setOnClickListener(new View.OnClickListener() {
+         //   public void onClick(View v) {
+         //       Toast toast = Toast.makeText(getApplicationContext(),
+         //               getResources().getString(R.string.toast_message), Toast.LENGTH_LONG);
+         //       toast.show(); }
+        //});
 
-        Switch switcher = findViewById(R.id.switcher);
-        TextView myTextView = findViewById(R.id.switcher);
-        switcher.setOnCheckedChangeListener( (whatClicked, newState) -> {
-            Snackbar.make(myTextView,getResources().getString(R.string.switch_message) + newState, Snackbar.LENGTH_SHORT).setAction( "Undo", click -> switcher.setChecked(!newState)).show();
-        });
+       // Switch switcher = findViewById(R.id.switcher);
+        //TextView myTextView = findViewById(R.id.switcher);
+        //switcher.setOnCheckedChangeListener( (whatClicked, newState) -> {
+         //   Snackbar.make(myTextView,getResources().getString(R.string.switch_message) + newState, Snackbar.LENGTH_SHORT).setAction( "Undo", click -> switcher.setChecked(!newState)).show();
+        //});
 
         final Button login = findViewById(R.id.login);
-        button.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                  }
