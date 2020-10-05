@@ -13,4 +13,5 @@
     <string name="enter_email">Entrer votre Email:</string>
     <string name="enter_pwd">Tapez votre mot de passe:</string>
     <string name="login">login</string>
+    <string name="name">Ecrire votre nom</string>
 </resources>
