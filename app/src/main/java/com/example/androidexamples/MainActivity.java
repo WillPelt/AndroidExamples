@@ -48,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent goToProfile = new Intent(MainActivity.this, ProfileActivity.class);
-                goToProfile.putExtra("EMAIL", R.id.email);
+                goToProfile.putExtra("EMAIL", email);
+                startActivity(goToProfile);
 
             }
         });
-
-
     }
 
     @Override

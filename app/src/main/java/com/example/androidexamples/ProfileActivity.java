@@ -20,38 +20,38 @@ public class ProfileActivity extends AppCompatActivity {
 
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
 
+
+    private void dispatchTakePictureIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        Log.e(ACTIVITY_NAME, "In function:" + this);
+
+        Intent fromMain = getIntent();
+        String email = fromMain.getStringExtra("EMAIL");
+        EditText typeField = findViewById(R.id.email);
+        typeField.setText(email);
+
 
         final ImageButton ImgButton = findViewById(R.id.imgbtn);
 
         mImageButton = (ImageButton)findViewById(R.id.imgbtn);
 
-        ImgButton.setOnClickListener(new View.OnClickListener() {
+        mImageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
+                dispatchTakePictureIntent();
             }
-
-            private void dispatchTakePictureIntent() {
-                   Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                   if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                       startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                   }
-               }
-
         });
-
-        Log.e(ACTIVITY_NAME, "In function:" + this);
-
-        Intent fromMain = getIntent();
-        String email = fromMain.getStringExtra("EMAIL");
-
-        EditText typeField = findViewById(R.id.email);
-        typeField.setText(email);
     }
 
     @Override
@@ -60,9 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-
             mImageButton.setImageBitmap(imageBitmap);
-            Log.e(ACTIVITY_NAME, "In function:" + this);
         }
     }
 
