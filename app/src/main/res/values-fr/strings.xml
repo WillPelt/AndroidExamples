@@ -9,4 +9,8 @@
     <string name="switcher">allumer / éteindre</string>
     <string name="check">Regarde ça</string>
     <string name="switch_message">"le commutateur est "</string>
+    <string name="email">Saisissez votre e-mail ici</string>
+    <string name="enter_email">Entrer votre Email:</string>
+    <string name="enter_pwd">Tapez votre mot de passe:</string>
+    <string name="login">login</string>
 </resources>

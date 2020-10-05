@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    tools:context=".MainActivity"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
 
     <LinearLayout
@@ -88,8 +88,8 @@
                 android:id="@+id/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/type" />
-                android:inputType="textPersonName"
+                android:text="@string/type"
+                android:inputType="textCapWords"
                 />
         </LinearLayout>
 
