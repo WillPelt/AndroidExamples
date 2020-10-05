@@ -16,12 +16,12 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Your Profile"
+                android:text="@string/YourProfile"
                 />
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Your name:"
+                android:text="@string/YourName"
                 />
             <EditText
                 android:id="@+id/name"
@@ -33,7 +33,7 @@
             <TextView
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:text="Your email:"
+            android:text="@string/YourEmail"
             />
             <EditText
                 android:id="@+id/email"
@@ -45,7 +45,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Your picture:"
+                android:text="@string/YourPicture"
                 />
             <ImageButton
                 android:src="@android:drawable/picture_frame"
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Click the button above to take a picture"
+                android:text="@string/ClickTheButton"
                 />
 
         </LinearLayout>
