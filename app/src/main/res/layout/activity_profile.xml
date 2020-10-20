@@ -61,7 +61,12 @@
                 android:layout_width="match_parent"
                 android:text="@string/ClickTheButton"
                 />
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gtc"
+                android:id="@id/gtcbtn"
+                />
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

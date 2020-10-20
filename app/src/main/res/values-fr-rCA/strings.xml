@@ -19,4 +19,7 @@
     <string name="YourEmail">Votre email:</string>
     <string name="YourName">Votre nom:</string>
     <string name="YourProfile">Votre profil</string>
+    <string name="gtc">aller au chat</string>
+    <string name="send">envoyer</string>
+    <string name="recieve">recevoir</string>
 </resources>

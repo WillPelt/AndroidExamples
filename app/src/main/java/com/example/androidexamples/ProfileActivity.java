@@ -53,6 +53,20 @@ public class ProfileActivity extends AppCompatActivity {
                 dispatchTakePictureIntent();
             }
         });
+
+        Button gtcbtn = findViewById(R.id.gtcbtn);
+
+        gtcbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ChatRoomActivity = new Intent(ProfileActivity.this, ChatRoomActivity.class);
+                startActivity(ChatRoomActivity);
+            }
+        });
+
+
+
+
     }
 
     @Override

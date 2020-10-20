@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="topText" type="id"></item>
+    <item name="gtcbtn" type="id" />
+    <item name="lv" type="id"></item>
+    <item name="recieve" type="id" />
+    <item name="send" type="id" />
+    <item name="textGoesHere" type="id" />
+    <item name="receiveView" type="id" />
+    <item name="sendView" type="id" />
+    <item name="receiveText" type="id" />
+    <item name="sendText" type="id" />
+    <item name="chatText" type="id" />
+    <item name="sender" type="id" />
 
 </resources>

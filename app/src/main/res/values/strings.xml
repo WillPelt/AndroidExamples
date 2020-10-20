@@ -19,4 +19,8 @@
     <string name="YourEmail">Your email:</string>
     <string name="YourName">Your name:</string>
     <string name="YourProfile">Your profile</string>
+    <string name="gtc">Go to chat</string>
+    <string name="send">Send</string>
+    <string name="recieve">receive</string>
+    <string name="textGoesHere" translatable="false" />
 </resources>
