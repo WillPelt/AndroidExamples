@@ -1,8 +1,14 @@
 package com.example.androidexamples;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +26,10 @@ import java.util.ArrayList;
 
 public class ChatRoomActivity extends AppCompatActivity {
 
-    public ArrayList<String> elements = new ArrayList<>();
-    public ArrayList<String> senders = new ArrayList<>();
+    public ArrayList<Message> messages = new ArrayList<>();
     ListAdapter la = new myListAdapter();
+    SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +40,18 @@ public class ChatRoomActivity extends AppCompatActivity {
         myList.setItemsCanFocus(false);
         myList.setAdapter(la);
         EditText et = findViewById(R.id.textGoesHere);
-
-
-
         Button send = findViewById(R.id.send);
         Button receive = findViewById(R.id.recieve);
+
+
 
         myList.setOnItemLongClickListener( (parent, view, pos, id) -> {
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             alertDialogBuilder.setTitle("Do you want to delete this?")
-                    .setMessage("The Selected Row is: "+pos+"\n"+"The database id: "+ id)
-                    .setPositiveButton("Yes", (click, arg) -> {elements.remove(pos); senders.remove(pos); ((myListAdapter) la).notifyDataSetChanged(); })
+                    .setMessage("The Selected Row is: "+pos+"\n"+"The database id: "+ messages.get(pos).getId())
+                    .setPositiveButton("Yes", (click, arg) -> {messages.remove(pos); db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(messages.get(pos).getId())}); ((myListAdapter) la).notifyDataSetChanged(); })
                     .setNegativeButton("No", (click, arg) -> {  })
                     .create().show();
 
@@ -56,11 +62,16 @@ public class ChatRoomActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message.setType("send");
+
                 EditText text = (EditText)findViewById(R.id.textGoesHere);
-                message.setText(text.getText().toString());
-                elements.add(message.getText());
-                senders.add(message.getType());
+                ContentValues newRowValues = new ContentValues();
+
+
+                newRowValues.put(MyOpener.COL_MESSAGE, text.getText().toString() );
+                newRowValues.put(MyOpener.COL_TYPE, "send");
+
+                long newID = db.insert(MyOpener.TABLE_NAME, MyOpener.COL_MESSAGE, newRowValues);
+
                 et.setText("");
                 ((myListAdapter) la).notifyDataSetChanged();
             }
@@ -68,18 +79,41 @@ public class ChatRoomActivity extends AppCompatActivity {
         receive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                message.setType("receive");
                 EditText text = (EditText)findViewById(R.id.textGoesHere);
-                message.setText(text.getText().toString());
-                elements.add(message.getText());
-                senders.add(message.getType());
+                ContentValues newRowValues = new ContentValues();
+
+                newRowValues.put(MyOpener.COL_MESSAGE, text.getText().toString() );
+                newRowValues.put(MyOpener.COL_TYPE, "receive");
+                long newID = db.insert(MyOpener.TABLE_NAME, MyOpener.COL_MESSAGE, newRowValues);
+
+                messages.add(new Message("receive", text.getText().toString(), newID ));
                 et.setText("");
                 ((myListAdapter) la).notifyDataSetChanged();
             }
         });
 
+        loadDataFromDatabase();
+    }
 
+    private void loadDataFromDatabase() {
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
 
+            String [] columns = {MyOpener.COL_ID, MyOpener.COL_TYPE, MyOpener.COL_MESSAGE};
+
+            Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+
+            int typeColumnIndex = results.getColumnIndex(MyOpener.COL_TYPE);
+            int messageColumnIndex = results.getColumnIndex(MyOpener.COL_MESSAGE);
+            int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
+
+            while (results.moveToNext()) { //starts at -1
+                String type = results.getString(typeColumnIndex);
+                String message = results.getString(messageColumnIndex);
+                long id = results.getLong(idColIndex);
+                messages.add(new Message(type, message, id));
+
+            }
 
     }
 
@@ -92,12 +126,12 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
         @Override
         public int getCount() {
-            return elements.size();
+            return messages.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return elements.get(position);
+            return messages.get(position);
         }
 
         @Override
@@ -111,16 +145,16 @@ public class ChatRoomActivity extends AppCompatActivity {
             LayoutInflater inflater = getLayoutInflater();
             View newView;
 
-            if (senders.get(position).equals("receive")) {
+            if (messages.get(position).getType().equals("receive")) {
                 newView = inflater.inflate(R.layout.activity_chat_room_receive, parent, false);
                 TextView tView = newView.findViewById(R.id.chatText);
-                tView.setText(elements.get(position));
+                tView.setText(messages.get(position).getText());
                 ImageButton img = newView.findViewById(R.id.sender);
             }
             else{
                 newView = inflater.inflate(R.layout.activity_chat_room_send, parent, false);
                 TextView tView = newView.findViewById(R.id.chatText);
-                tView.setText(elements.get(position));
+                tView.setText(messages.get(position).getText());
                 ImageButton img = newView.findViewById(R.id.sender);
             }
             return newView;
@@ -128,24 +162,59 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
     }
 
-    static class message {
+    class Message {
 
-        private static String type = "";
-        private static String text = "hi";
+        private String type = "";
+        private  String text = "";
+        private long id;
 
-        public static void setText(String msg){
-            text = msg;
-        }
-        public static String getText(){
-            return text;
-        }
-        public static void setType(String tp){
-            type = tp;
-        }
-        public static String getType(){
-            return type;
+        public Message(String type, String msg, long id){
+            setType(type);
+            setText(msg);
+            setId(id);
         }
 
+        public void setText(String msg){ text = msg; }
+        public String getText(){ return text; }
+        public void setType(String tp){type = tp; }
+        public  String getType(){ return type; }
+        public void setId(long ID){id = ID;}
+        public long getId(){return id;}
+
+    }
+    public class MyOpener extends SQLiteOpenHelper{
+
+        protected final static String DATABASE_NAME = "MessagesDB";
+        protected final static int VERSION_NUM = 1;
+        public final static String TABLE_NAME="MESSAGES";
+        public final static String COL_TYPE="TYPE";
+        public final static String COL_MESSAGE="MESSAGE";
+        public final static String COL_ID= "_id";
+
+        public MyOpener(Context ctx) {
+            super(ctx, DATABASE_NAME, null, VERSION_NUM);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " +TABLE_NAME+ " ("+COL_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, " + COL_TYPE + " text," + COL_MESSAGE + " text);");
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL( "DROP TABLE IF EXISTS " + TABLE_NAME);
+
+        onCreate(db);
+
+
+        }
+
+        @Override
+        public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            db.execSQL( "DROP TABLE IF EXISTS " + TABLE_NAME);
+
+            onCreate(db);
+        }
     }
 
 
