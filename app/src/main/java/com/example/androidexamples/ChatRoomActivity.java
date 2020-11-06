@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class ChatRoomActivity extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
             alertDialogBuilder.setTitle("Do you want to delete this?")
-                    .setMessage("The Selected Row is: "+pos+"\n"+"The database id: "+ messages.get(pos).getId())
-                    .setPositiveButton("Yes", (click, arg) -> {messages.remove(pos); db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(messages.get(pos).getId())}); ((myListAdapter) la).notifyDataSetChanged(); })
+                    .setMessage("The Selected Row is: "+pos+"\n"+"The database id: "+ la.getItemId(pos))
+                    .setPositiveButton("Yes", (click, arg) -> { db.delete(MyOpener.TABLE_NAME,MyOpener.COL_ID + "= ?", new String[] {Long.toString(la.getItemId(pos))});messages.remove(pos);((myListAdapter) la).notifyDataSetChanged(); })
                     .setNegativeButton("No", (click, arg) -> {  })
                     .create().show();
 
@@ -66,12 +67,11 @@ public class ChatRoomActivity extends AppCompatActivity {
                 EditText text = (EditText)findViewById(R.id.textGoesHere);
                 ContentValues newRowValues = new ContentValues();
 
-
                 newRowValues.put(MyOpener.COL_MESSAGE, text.getText().toString() );
                 newRowValues.put(MyOpener.COL_TYPE, "send");
 
                 long newID = db.insert(MyOpener.TABLE_NAME, MyOpener.COL_MESSAGE, newRowValues);
-
+                messages.add(new Message("send", text.getText().toString(), newID ));
                 et.setText("");
                 ((myListAdapter) la).notifyDataSetChanged();
             }
@@ -86,7 +86,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                 newRowValues.put(MyOpener.COL_TYPE, "receive");
                 long newID = db.insert(MyOpener.TABLE_NAME, MyOpener.COL_MESSAGE, newRowValues);
 
-                messages.add(new Message("receive", text.getText().toString(), newID ));
+                messages.add(new Message("receive", text.getText().toString(), newID));
                 et.setText("");
                 ((myListAdapter) la).notifyDataSetChanged();
             }
@@ -103,6 +103,8 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             Cursor results = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
 
+
+
             int typeColumnIndex = results.getColumnIndex(MyOpener.COL_TYPE);
             int messageColumnIndex = results.getColumnIndex(MyOpener.COL_MESSAGE);
             int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
@@ -114,6 +116,8 @@ public class ChatRoomActivity extends AppCompatActivity {
                 messages.add(new Message(type, message, id));
 
             }
+
+        printCursor(results, db.getVersion());
 
     }
 
@@ -136,7 +140,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return (long)position;
+            return messages.get(position).getId();
         }
 
         @Override
@@ -165,7 +169,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     class Message {
 
         private String type = "";
-        private  String text = "";
+        private String message = "";
         private long id;
 
         public Message(String type, String msg, long id){
@@ -174,8 +178,8 @@ public class ChatRoomActivity extends AppCompatActivity {
             setId(id);
         }
 
-        public void setText(String msg){ text = msg; }
-        public String getText(){ return text; }
+        public void setText(String msg){ message = msg; }
+        public String getText(){ return message; }
         public void setType(String tp){type = tp; }
         public  String getType(){ return type; }
         public void setId(long ID){id = ID;}
@@ -217,6 +221,23 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
     }
 
+    public void printCursor(Cursor c, int version) {
+        c.moveToFirst();
+        c.moveToPrevious();
+        Log.d("CHAT_ROOM_ACTIVITY", "Version Number: " + version);
+        Log.d("CHAT_ROOM_ACTIVITY", "Column Count: " + c.getColumnCount());
+        for (String column : c.getColumnNames()) {
+            Log.d("CHAT_ROOM_ACTIVITY", "Column Name: " + column);
+        }
+        Log.d("CHAT_ROOM_ACTIVITY", "Row Count: " + c.getCount());
+
+        for (int x = 0; x<c.getCount(); x++) {
+            c.moveToNext();
+            Log.d("CHAT_ROOM_ACTIVITY", "ID: " + c.getString(0) + " TYPE: " + c.getString(1) + " MESSAGE: " + c.getString(2));
+        }
+        c.moveToFirst();
+        c.moveToPrevious();
+        }
 
 
 }
