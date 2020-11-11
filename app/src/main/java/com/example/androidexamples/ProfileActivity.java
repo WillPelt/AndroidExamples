@@ -64,6 +64,16 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        Button gtwbtn = findViewById(R.id.gtwbtn);
+
+        gtwbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent WeatherForecast = new Intent(ProfileActivity.this, WeatherForecast.class);
+                startActivity(WeatherForecast);
+            }
+        });
+
 
 
 

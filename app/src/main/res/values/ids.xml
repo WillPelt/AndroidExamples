@@ -12,5 +12,12 @@
     <item name="sendText" type="id" />
     <item name="chatText" type="id" />
     <item name="sender" type="id" />
+    <item name="gtwbtn" type="id" />
+    <item name="current_temp" type="id" />
+    <item name="min_temp" type="id" />
+    <item name="max_temp" type="id" />
+    <item name="UV" type="id" />
+    <item name="prog_bar" type="id" />
+    <item name="weather_icon" type="id" />
 
 </resources>

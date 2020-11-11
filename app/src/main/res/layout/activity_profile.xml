@@ -67,6 +67,12 @@
                 android:text="@string/gtc"
                 android:id="@id/gtcbtn"
                 />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gtw"
+                android:id="@id/gtwbtn"
+                />
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
