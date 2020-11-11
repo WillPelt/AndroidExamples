@@ -5,42 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WeatherForecast">
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-        android:orientation="horizontal">
-    <ImageView android:layout_height="200dp" android:layout_width="200dp"
-        android:id="@id/weather_icon"
-        />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@id/current_temp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@id/min_temp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@id/max_temp"
-        />
+    <GridLayout
 
-    <TextView
-        android:id="@id/UV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-         />
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-    <ProgressBar
-        android:id="@id/prog_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-          />
-    </LinearLayout>
+        <ImageView
+            android:id="@id/weather_icon"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+        <TextView
+            android:id="@id/current_temp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_row="1"
+            android:layout_column="0" />
+
+        <TextView
+            android:id="@id/min_temp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_row="2"
+            android:layout_column="0" />
+
+        <TextView
+            android:id="@id/max_temp"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_row="3"
+            android:layout_column="0" />
+
+        <TextView
+            android:id="@id/UV"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_row="4"
+            android:layout_column="0" />
+
+        <ProgressBar
+            android:id="@id/prog_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:visibility="invisible" />
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,11 +18,13 @@ import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class WeatherForecast extends AppCompatActivity {
         TextView u = findViewById(R.id.UV);
         ImageView wi = findViewById(R.id.weather_icon);
 
-        private String UV;
+        private Double UV;
         private String min;
         private String max;
         private String current;
@@ -95,19 +97,19 @@ public class WeatherForecast extends AppCompatActivity {
                         //If you get here, then you are pointing at a start tag
                         if(xpp.getName().equals("weather"))
                         {
-
                             iconName = xpp.getAttributeValue(null,    "icon");
-
                         }
                         else if(xpp.getName().equals("temperature"))
                         {
                             min = xpp.getAttributeValue(null,    "min");
                             publishProgress(25);
+                            Log.i("WeatherForecast", "The min is now: " + min) ;
                             max = xpp.getAttributeValue(null, "max");
                             publishProgress(50);
+                            Log.i("WeatherForecast", "The max is now: " + max) ;
                             current = xpp.getAttributeValue(null, "value");
                             publishProgress(75);
-
+                            Log.i("WeatherForecast", "The current is now: " + current) ;
 
                         }
 
@@ -116,11 +118,11 @@ public class WeatherForecast extends AppCompatActivity {
                 }
 
 
-                if (fileExistance(iconName)){
-                    Log.i(iconName, "File Found");
+                if (fileExistance(iconName+".png")){
+                    Log.i("WeatherForecast", "Image File Found");
                     FileInputStream fis = null;
-                    try {    fis = openFileInput(iconName);   }
-                    catch (FileNotFoundException e) {    e.printStackTrace(); Log.i(iconName, "File was found, but something went wrong"); }
+                    try {    fis = openFileInput(iconName+".png");   }
+                    catch (FileNotFoundException e) {    e.printStackTrace();  }
                     bm = BitmapFactory.decodeStream(fis);
 
                 }else {
@@ -137,22 +139,39 @@ public class WeatherForecast extends AppCompatActivity {
                     image.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
                     outputStream.flush();
                     outputStream.close();
-                    Log.i(iconName, "Downloaded");
+                    Log.i("WeatherForecast", "Image was Downloaded");
                     bm = image;
                 }
 
 
-
+                //create a URL object of what server to contact:
                 URL UVurl = new URL(OTUV);
+
                 //open the connection
-                HttpURLConnection UVurlConnection = (HttpURLConnection) url.openConnection();
+                HttpURLConnection UVurlConnection = (HttpURLConnection) UVurl.openConnection();
 
                 //wait for data:
-                InputStream UVresponse = urlConnection.getInputStream();
+                InputStream UVresponse = UVurlConnection.getInputStream();
 
-                JSONObject jObject = new JSONObject((Map) UVresponse);
-                //float value = jObject.getDouble("value");
+                //JSON reading:   Look at slide 26
+                //Build the entire string response:
+                BufferedReader reader = new BufferedReader(new InputStreamReader(UVresponse, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
 
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String UVresult = sb.toString(); //result is the whole string
+
+                // convert string to JSON: Look at slide 27:
+                JSONObject uvReport = new JSONObject(UVresult);
+
+                //get the double associated with "value"
+                UV = uvReport.getDouble("value");
+
+                Log.i("WeatherForecast", "The uv is now: " + UV) ;
 
             }
 
@@ -166,9 +185,9 @@ public class WeatherForecast extends AppCompatActivity {
             return "Done";
         }
 
+
         public boolean fileExistance(String fname){
             File file = getBaseContext().getFileStreamPath(fname);
-
             return file.exists();   }
 
 
@@ -182,10 +201,10 @@ public class WeatherForecast extends AppCompatActivity {
         public void onPostExecute(String fromDoInBackground)
         {
             Log.i("HTTP", fromDoInBackground);
-            mx.setText(max);
-            mn.setText(min);
-            cr.setText(current);
-            u.setText(UV);
+            mx.setText("High of: " +max);
+            mn.setText("Low of: "+min);
+            cr.setText("Current Temp: "+ current);
+            u.setText("UV Rating: "+UV);
             wi.setImageBitmap(bm);
             pb.setVisibility(View.INVISIBLE);
         }
