@@ -19,5 +19,15 @@
     <item name="UV" type="id" />
     <item name="prog_bar" type="id" />
     <item name="weather_icon" type="id" />
+    <item name="fl" type="id" />
+    <item name="msghere" type="id" />
+    <item name="IsaSendMessage" type="id"/>
+    <item name="fragment_details" type="id" />
+    <item name="fragchck" type="id" />
+    <item name="textid" type="id" />
+    <item name="finishButton" type="id" />
+    <item name="fragment_details_tablet" type="id" />
+    <item name="empty_activity" type="id" />
+    <item name="fltablet" type="id" />
 
 </resources>

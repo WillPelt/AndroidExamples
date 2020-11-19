@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -18,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,14 +29,21 @@ import java.util.ArrayList;
 
 public class ChatRoomActivity extends AppCompatActivity {
 
+
     public ArrayList<Message> messages = new ArrayList<>();
     ListAdapter la = new myListAdapter();
     SQLiteDatabase db;
 
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_ID = "ID";
+    public static final String ITEM_TYPE = "TYPE";
+    public DetailsFragment dFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_chat_room);
 
        final ListView myList = (ListView) findViewById(R.id.lv);
@@ -43,8 +52,39 @@ public class ChatRoomActivity extends AppCompatActivity {
         EditText et = findViewById(R.id.textGoesHere);
         Button send = findViewById(R.id.send);
         Button receive = findViewById(R.id.recieve);
+        Boolean isTablet =  findViewById(R.id.fltablet) != null;
 
 
+
+
+        myList.setOnItemClickListener( (list, view, pos, id) -> {
+                    //Create a bundle to pass data to the new fragment
+                    Bundle dataToPass = new Bundle();
+                    dataToPass.putString(ITEM_SELECTED, messages.get(pos).getText() );
+                    Log.e("ChatRoomActivity", "Text: " +messages.get(pos).getText());
+                    dataToPass.putInt(ITEM_POSITION, pos);
+                    dataToPass.putLong(ITEM_ID, id);
+                    dataToPass.putString(ITEM_TYPE, messages.get(pos).getType());
+                    Log.e("ChatRoomActivity", "Type: " + messages.get(pos).getType());
+                     Log.e("ChatRoomActivity", "Tablet? " + isTablet);
+            if(isTablet)
+                    {
+                        dFragment = new DetailsFragment(); //add a DetailFragment
+                        dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fltablet, dFragment) //Add the fragment in FrameLayout
+                                .commit(); //actually load the fragment. Calls onCreate() in DetailFragment
+                    }
+                    else //isPhone
+                    {
+                        Intent nextActivity = new Intent(ChatRoomActivity.this, EmptyActivity.class);
+                        nextActivity.putExtras(dataToPass); //send data to next activity
+                        startActivity(nextActivity); //make the transition
+                    }
+
+
+                });
 
         myList.setOnItemLongClickListener( (parent, view, pos, id) -> {
 
@@ -52,7 +92,10 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             alertDialogBuilder.setTitle("Do you want to delete this?")
                     .setMessage("The Selected Row is: "+pos+"\n"+"The database id: "+ la.getItemId(pos))
-                    .setPositiveButton("Yes", (click, arg) -> { db.delete(MyOpener.TABLE_NAME,MyOpener.COL_ID + "= ?", new String[] {Long.toString(la.getItemId(pos))});messages.remove(pos);((myListAdapter) la).notifyDataSetChanged(); })
+                    .setPositiveButton("Yes", (click, arg) -> { db.delete(MyOpener.TABLE_NAME,MyOpener.COL_ID + "= ?", new String[] {Long.toString(la.getItemId(pos))});messages.remove(pos);((myListAdapter) la).notifyDataSetChanged();
+                        if (isTablet){
+                            getSupportFragmentManager().beginTransaction().remove(dFragment).commit();
+                        }})
                     .setNegativeButton("No", (click, arg) -> {  })
                     .create().show();
 

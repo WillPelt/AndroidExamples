@@ -24,4 +24,7 @@
     <string name="recieve">receive</string>
     <string name="textGoesHere" translatable="false" />
     <string name="gtw">Go To Weather</string>
+    <string name="message_here">Message Here</string>
+    <string name="isasendmessage">Is a Send Message</string>
+    <string name="hide">hide</string>
 </resources>
