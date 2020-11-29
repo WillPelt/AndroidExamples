@@ -72,6 +72,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/gtw"
                 android:id="@id/gtwbtn"
+                />            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gtt"
+                android:id="@id/gttbtn"
                 />
         </LinearLayout>
 

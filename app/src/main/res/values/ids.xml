@@ -29,5 +29,16 @@
     <item name="fragment_details_tablet" type="id" />
     <item name="empty_activity" type="id" />
     <item name="fltablet" type="id" />
+    <item name="gttbtn" type="id" />
+    <item name="candle" type="id" />
+    <item name="penguin" type="id" />
+    <item name="santa" type="id" />
+    <item name="overflow" type="id" />
+    <item name="backToLoginbtn" type="id" />
+    <item name="WeatherForecastbtn" type="id" />
+    <item name="chatPagebtn" type="id" />
+    <item name="navmenu" type="id" />
+    <item name="nav_view" type="id" />
+    <item name="drawer_layout" type="id" />
 
 </resources>

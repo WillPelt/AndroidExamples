@@ -22,5 +22,23 @@
     <string name="gtc">aller au chat</string>
     <string name="send">envoyer</string>
     <string name="recieve">recevoir</string>
-    <string name="gtw">Go To Weather</string>
+    <string name="gtw">Aller à la météo</string>
+    <string name="message_here">Message ici</string>
+    <string name="isasendmessage">est un message envoyer</string>
+    <string name="hide">cacher</string>
+    <string name="gtt">Aller a barre d\'outils</string>
+    <string name="ToolbarTitle">barre d\'outils</string>
+    <string name="search_text_button">Chercher</string>
+    <string name="candle">bougie</string>
+    <string name="Santa">Pere Noel</string>
+    <string name="Penguin">manchote</string>
+    <string name="Overflow">Overflow</string>
+    <string name="overflow_toast_message">tu as cliqué sur overflow menu</string>
+    <string name="candle_toast_message">tu as cliqué sur 1</string>
+    <string name="penguin_toast_message">tu as cliqué sur 2</string>
+    <string name="santa_toast_message">tu as cliqué sur 3</string>
+    <string name="gbtl">Aller au login</string>
+    <string name="open">Ouvre</string>
+    <string name="close">Fermer</string>
+    <string name="about">A propos</string>
 </resources>

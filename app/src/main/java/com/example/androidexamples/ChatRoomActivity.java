@@ -40,6 +40,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     public static final String ITEM_TYPE = "TYPE";
     public DetailsFragment dFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

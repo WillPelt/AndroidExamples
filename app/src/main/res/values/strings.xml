@@ -27,4 +27,19 @@
     <string name="message_here">Message Here</string>
     <string name="isasendmessage">Is a Send Message</string>
     <string name="hide">hide</string>
+    <string name="gtt">Go To Toolbar</string>
+    <string name="ToolbarTitle">Toolbar</string>
+    <string name="search_text_button">Search</string>
+    <string name="candle">Candle</string>
+    <string name="Santa">Santa</string>
+    <string name="Penguin">Penguin</string>
+    <string name="Overflow">Overflow</string>
+    <string name="overflow_toast_message">You clicked on the overflow menu</string>
+    <string name="candle_toast_message">You clicked on item 1</string>
+    <string name="penguin_toast_message">You clicked on item 2</string>
+    <string name="santa_toast_message">You clicked on item 3</string>
+    <string name="gbtl">Go back to login</string>
+    <string name="open">open</string>
+    <string name="close">open</string>
+    <string name="about">about</string>
 </resources>

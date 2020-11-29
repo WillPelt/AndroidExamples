@@ -73,16 +73,26 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(WeatherForecast);
             }
         });
+        Button gttbtn = findViewById(R.id.gttbtn);
 
-
-
+        gttbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent ToolBar = new Intent(ProfileActivity.this, TestToolbar.class);
+                startActivityForResult(ToolBar, 500);
+            }
+        });
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (resultCode == 500){
+            Log.i("ProfileActivity", "finished");
+            finish();
+        }
+        else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);

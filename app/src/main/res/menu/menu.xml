@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menu">
+
+    <item
+        android:title="@string/candle"
+        android:orderInCategory="1"
+        android:icon="@drawable/candle"
+        android:id="@id/candle"
+        app:showAsAction="always"
+        />
+    <item
+        android:title="@string/Penguin"
+        android:orderInCategory="2"
+        android:icon="@drawable/penguin"
+        app:showAsAction="always"
+        android:id="@id/penguin"
+        />
+    <item
+        android:title="@string/Santa"
+        android:orderInCategory="3"
+        android:icon="@drawable/santa"
+        app:showAsAction="always"
+        android:id="@id/santa"
+        />
+
+    <item
+        android:title="@string/about"
+        android:orderInCategory="1"
+        android:id="@id/overflow"
+        app:showAsAction="never"
+        />
+
+</menu>
